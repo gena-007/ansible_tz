@@ -1,0 +1,18 @@
+- name: Install netdata
+  yum:
+    name=netdata
+    state=latest
+
+- name: Start and Enable Netdata
+  ansible.builtin.service:
+    name: netdata
+    state: started
+    enabled: True
+
+- name: Replace netdata.conf
+  template:
+    src=/home/sgg/ansible/roles/netdata/templates/netdata.conf
+    dest=/etc/netdata/netdata.conf
+  notify:
+  - netdata restart
+
